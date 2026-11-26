@@ -132,7 +132,7 @@ Timings below are reported for `Intel(R) Core(TM) i5-10600K CPU @ 4.10GHz, 16 GB
 ### Cluster, Solvation & Non-Covalent Interaction (NCI) Mode
 *(Activated automatically whenever the molecular graph contains more than one disconnected fragment; supports explicit partial charges in column 5 of `.xyz`, formal monatomic ions, and fragment-wise QEq polarization.)*
 * `--center=<int>` — 1-based atom index of the central atom/ion to anchor at the origin $(0,0,0)$ and surround with a spherical solvation shell (default: `0` = cluster center of mass).
-* `--sort=energy|center` — Rank optimized conformers either by UFF energy (`energy`, default) or by ascending offset by distance from center atom `).
+* `--sort=energy|center` — Rank optimized conformers either by UFF energy (`energy`, default) or by ascending offset by `distance` from center atom ).
 * `--top-center=<int>` — Retain only the $N$ most symmetrically centered shells around `--center` prior to diversity selection (default: `0` = keep all).
 * `--wall-r=<float>` — Radius $R_{\text{wall}}$ (in Å) of the smooth quartic confining cavity preventing cluster evaporation during L-BFGS (default: `0.0` = automatic sizing from fragment radii).
 * `--eps=<float>` — Effective dielectric constant $\varepsilon$ screening intermolecular Coulomb interactions (default: `2.0`).
