@@ -118,8 +118,10 @@ Standalone, `UFF`-based OpenMP-parallelized conformer, transition-state, and sol
 If you use **Uniconf** in your research, please cite:
 
 1. Uniconf: An alternative conformer generator with broad applicability
+   
    Y. Minenkov Chem. Phys.Lett. 2025, 860, 141813 (DOI: 10.1016/j.cplett.2024.141813)
 2. Molcomp: A Software Tool for the Structural Characterization and Deduplication of Conformers
+   
    A. M. Genaev, A. D. Moshchenkov, A. S. Ryzhako, A. A. Otlyotov, and Y. Minenkov Adv. Theor. Simul. 2026, 9, e70604 (DOI: 10.1002/adts.70604)
 ---
 
