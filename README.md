@@ -1,6 +1,6 @@
 # 🚀 Uniconf v3.0.0
 
-Standalone, OpenMP-parallelized conformer, transition-state, and solvation-cluster generator & deduplicator for Linux (`x86_64`). Compiled as a fully static single binary (~2 MB) with zero runtime dependencies.
+Standalone, `UFF`-based OpenMP-parallelized conformer, transition-state, and solvation-cluster generator & deduplicator for Linux (`x86_64`). Compiled as a fully static single binary (~2 MB) with zero runtime dependencies.
 
 ## 1. Download & Quick Start
 
