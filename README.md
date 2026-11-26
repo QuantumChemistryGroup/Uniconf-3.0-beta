@@ -23,7 +23,7 @@ Standalone, `UFF`-based OpenMP-parallelized conformer, transition-state, and sol
 ## 2. Examples (`examples/`)
 
 ### A. Organic Molecules & Peptides
-* `examples/organic/GFA10.xyz` — [краткое описание молекулы / число атомов]
+* `examples/organic/GFA10.xyz` [Gly-Phe-Ala tripeptide / 39 atoms]
   ```bash
   ./uniconf examples/organic/GFA10.xyz --nconf=500 --top-energy=100 --max-conf=15 -j=4
   ```
