@@ -25,10 +25,12 @@ Standalone, `UFF`-based OpenMP-parallelized conformer, transition-state, and sol
 Timings below are reported for `Intel(R) Core(TM) i5-10600K CPU @ 4.10GHz 16Gb RAM`
 
 ### A. Organic Molecules & Peptides
-* `examples/organic/GFA10.xyz` [Gly-Phe-Ala tripeptide / 39 atoms]
+* `examples/organic/GFA10.xyz` [**Gly-Phe-Ala tripeptide** / 39 atoms]
   ```bash
   ./uniconf examples/organic/GFA10.xyz --nconf=500 --top-energy=100 --max-conf=15 -j=4
   ```
+  *Generates 500 conformers (Sobol + Kronecker quasi-MC), then takes 100 most stable, and extract 15 most structurally diverse*\
+  Wall time: `9 sec`  
 * `examples/organic/GPPGPP_0.xyz` — hexapeptide with 4 proline rings (ring flaps + backbone torsions)
   ```bash
   ./uniconf examples/organic/GPPGPP_0.xyz --nconf=500 --top-energy=100 --max-conf=15 -j=4
