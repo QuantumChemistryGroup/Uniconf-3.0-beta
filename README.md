@@ -37,7 +37,7 @@ Timings below are reported for `Intel(R) Core(TM) i5-10600K CPU @ 4.10GHz, 16 GB
   ```bash
   ./uniconf examples/organic/GPPGPP_0.xyz --nconf=1000 --dftref=true --top-energy=300 --max-conf=33 -j=6
   ```
-  *Calibrates UFF $r_0$ and $\theta_0$ to the DFT geometry, generates 1000 conformers, keeps the 300 most stable unique structures, and extracts 33 most structurally diverse representatives.*\
+  *Calibrates UFF r0 and theta_0 to the DFT geometry, generates 1000 conformers, keeps the 300 most stable unique structures, and extracts 33 most structurally diverse representatives.*\
   **Wall time (6 threads):** `1 min 12 sec`
 
 * `examples/organic/m1_00_YGGFL.xyz` — **Leu-enkephalin pentapeptide**
@@ -53,14 +53,14 @@ Timings below are reported for `Intel(R) Core(TM) i5-10600K CPU @ 4.10GHz, 16 GB
   ```bash
   ./uniconf examples/tm/akugod_10_b973c.xyz --dftref=true --tmfr=true --nconf=500 --max-conf=20 -j=6
   ```
-  *Calibrates UFF $r_0$ and $\theta_0$ to the DFT geometry, freezes the transition-metal coordination sphere, generates 500 conformers, and extracts 20 most structurally diverse representatives.*\
+  *Calibrates UFF r0 and theta_0 to the DFT geometry, freezes the transition-metal coordination sphere, generates 500 conformers, and extracts 20 most structurally diverse representatives.*\
   **Wall time (6 threads):** `36 sec`
 
 * `examples/tm/amozeh_10_b973c.xyz` — DFT-optimized transition-metal complex (`B97-3c`)
   ```bash
   ./uniconf examples/tm/amozeh_10_b973c.xyz --dftref=true --tmfr=true --nconf=5000 --top-energy=500 --max-conf=33 -j=6
   ```
-  *Calibrates UFF $r_0$ and $\theta_0$ to the DFT geometry, freezes the transition-metal coordination sphere, generates 5000 conformers, keeps the 500 lowest-energy unique structures, and extracts 33 most structurally diverse representatives.*\
+  *Calibrates UFF r0 and theta_0 to the DFT geometry, freezes the transition-metal coordination sphere, generates 5000 conformers, keeps the 500 lowest-energy unique structures, and extracts 33 most structurally diverse representatives.*\
   **Wall time (6 threads):** `3 min 24 sec`
 
 ### C. Solvation Shells & Clusters
