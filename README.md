@@ -31,27 +31,37 @@ Timings below are reported for `Intel(R) Core(TM) i5-10600K CPU @ 4.10GHz 16Gb R
   ```
   *Generates 500 conformers (Sobol + Kronecker quasi-MC), then takes 100 most stable, and extract 15 most structurally diverse*\
   Wall time: `9 sec`  
-* `examples/organic/GPPGPP_0.xyz` — hexapeptide with 4 proline rings (ring flaps + backbone torsions)
+* `examples/organic/GPPGPP_0.xyz` — **hexapeptide with 4 proline rings** (ring flaps + backbone torsions)
   ```bash
-  ./uniconf examples/organic/GPPGPP_0.xyz --nconf=500 --top-energy=100 --max-conf=15 -j=4
+  ./uniconf examples/organic/GPPGPP_0.xyz --nconf=1000 --dftref=true --top-energy=300 --max-conf=33 -j=6
   ```
+  *Fits UFF r0/bend0 to DFT geometry, generates 1000 conformers (Sobol + Kronecker quasi-MC), then takes 300 most stable, and extract 33 most structurally diverse*\
+  Wall time on 6 cores: `1 min 12 sec` 
 * `examples/organic/m1_00_YGGFL.xyz` — Leu-enkephalin pentapeptide
   ```bash
-  ./uniconf examples/organic/m1_00_YGGFL.xyz --nconf=500 --top-energy=100 --max-conf=15 -j=4
+  ./uniconf examples/organic/m1_00_YGGFL.xyz --nconf=1000 --top-energy=100 --max-conf=10 -j=6
   ```
+  *Generates 1000 conformers (Sobol + Kronecker quasi-MC), then takes 100 most stable, and extract 10 most structurally diverse*\
+  Wall time: `1 min 26 sec`  
 
-### B. Transition-Metal Complexes
+### B. Transition-Metal Complexes (a few instances from the **TM40 dataset**)
 * `examples/tm/akugod_10_b973c.xyz` — DFT-optimized transition-metal complex (`B97-3c`)
   ```bash
   ./uniconf examples/tm/akugod_10_b973c.xyz --dftref=true --tmfr=true --nconf=500 --max-conf=20 -j=4
   ```
+    *Fits UFF r0/bend0 to DFT geometry, freezes transition metal center, generates 500 conformers (Sobol + Kronecker quasi-MC), and extract 20 most structurally diverse*\
+  Wall time on 6 cores: `36 sec` 
+
 * `examples/tm/amozeh_10_b973c.xyz` — DFT-optimized transition-metal complex (`B97-3c`)
   ```bash
-  ./uniconf examples/tm/amozeh_10_b973c.xyz --dftref=true --tmfr=true --nconf=500 --max-conf=20 -j=4
+  ./uniconf examples/tm/amozeh_10_b973c.xyz --dftref=true --tmfr=true --nconf=5000 --top-energy=500 --max-conf=33 -j=6
   ```
+    *Fits UFF r0/bend0 to DFT geometry, freezes transition metal center, generates 5000 conformers (Sobol + Kronecker quasi-MC), gets 500 most energetically stable, and extract 33 most structurally diverse*\
+  Wall time on 6 cores: `3 min 24 sec` 
 
 ### C. Solvation Shells & Clusters
-* `examples/clusters/m1_01_NaDMC6.xyz` — $[\text{Na}(\text{DMC})_6]^+$ solvation shell (`Na+` at atom index 73)
+* `examples/clusters/m1_01_NaDMC6.xyz` — $[\text{Na}(\text{DMC})_6]^+$ solvation shell (`Na+` at atom index 73)\
+  Charges are listed as fifth column in xyz file
   ```bash
   ./uniconf examples/clusters/m1_01_NaDMC6.xyz --center=73 --nconf=500 --top-center=100 --max-conf=10 -j=4
   ```
@@ -126,6 +136,8 @@ If you use **Uniconf** in your research, please cite:
 2. Molcomp: A Software Tool for the Structural Characterization and Deduplication of Conformers\
    A. M. Genaev, A. D. Moshchenkov, A. S. Ryzhako, A. A. Otlyotov, and Y. Minenkov Adv. Theor. Simul. 2026, 9, e70604 (DOI: 10.1002/adts.70604)
 ---
+
+
 
 ## 5. Contact & Feedback
 
