@@ -1,4 +1,4 @@
-# 🚀 Uniconf v3.0.0-beta
+# 🚀 Uniconf v3.0.0
 
 Standalone, OpenMP-parallelized conformer, transition-state, and solvation-cluster generator & deduplicator for Linux (`x86_64`). Compiled as a fully static single binary (~2 MB) with zero runtime dependencies.
 
@@ -68,21 +68,48 @@ Standalone, OpenMP-parallelized conformer, transition-state, and solvation-clust
 
 ---
 
-## 3. Main Options Summary
+## 3. Command-Line Options
 
-| Flag | Description |
-| :--- | :--- |
-| `--nconf=<int>` | Number of quasi-random (`Sobol+Kronecker`) conformers to generate (default: `100`) |
-| `--dftref=true\|false` | Calibrate equilibrium bond lengths and angles to the input geometry |
-| `--tmfr=true\|false` | Freeze transition metal(s) and 1–2 coordination sphere during L-BFGS |
-| `--geomprint=true` | Write perceived connectivity & UFF atom types to `<stem>.bond` and exit |
-| `--readbond=<file.bond>` | Load custom connectivity / partial bonds from `.bond` |
-| `--center=<int>` | Anchor cluster / solvation shell around 1-based atom index |
-| `--top-center=<int>` | Keep $N$ most centered shells around `--center` before diversity selection |
-| `--top-energy=<int>` | Keep $N$ lowest-energy unique conformers (`0` = all, no FPS) |
-| `--max-conf=<int>` | Select $K$ maximally diverse conformers via MaxMin FPS |
-| `-j=<int>` | Number of OpenMP threads (`0` = all available cores) |
-| `-o=<file>` | Output multi-frame `.xyz` file (default: `<input>-conf.xyz`) |
+```bash
+./uniconf <input.xyz> [options]
+```
+
+### General & Parallel Execution
+* `-o=<file>`, `--out=<file>` — Output multi-frame `.xyz` file containing the final ensemble (default: `<input>-conf.xyz`).
+* `-j=<int>`, `--j=<int>` — Number of OpenMP threads (`0` = use all available CPU cores; recommended `-j=4` or `-j=8` on shared login nodes).
+* `-h`, `--help` — Print full CLI help message and exit.
+
+### Sampling & Force-Field Relaxation (UFF + L-BFGS)
+* `--nconf=<int>` — Number of conformers to generate (default: `100`):
+  * `--nconf=0`: **Full systematic enumeration** over all discrete torsion/flap/inversion combinations (automatically enabled when the total combination count is $\le 10^6$).
+  * `--nconf=N` ($N > 0$): **Quasi-random sampling** using a deterministic `Sobol` (1–40D) + `Kronecker` (41D+) low-discrepancy sequence.
+* `--niter=<int>` — Maximum number of L-BFGS energy/gradient evaluations per conformer (default: `5500`).
+* `--dftref=true|false` — Calibrate equilibrium bond lengths ($r_0$) and valence angles ($	heta_0$) directly from the input reference `.xyz` geometry (default: `false`; recommended when starting from a DFT-optimized structure).
+* `--tmfr=true|false` — Freeze transition-metal center(s) and their 1–2 coordination sphere during L-BFGS relaxation while allowing spectator ligands to rotate freely (default: `false`).
+* `--geomprint=true` — Perceive molecular connectivity and UFF atom types, write them to `<stem>.bond`, and **exit immediately** without running conformer generation (default: `false`).
+* `--readbond=<file.bond>` — Override automatic bond perception by reading custom connectivity and UFF atom types from `<file.bond>` (essential for transition states with stretched partial bonds or non-covalent solvation shells).
+
+### Cluster, Solvation & Non-Covalent Interaction (NCI) Mode
+*(Activated automatically whenever the molecular graph contains more than one disconnected fragment; supports explicit partial charges in column 5 of `.xyz`, formal monatomic ions, and fragment-wise QEq polarization.)*
+* `--center=<int>` — 1-based atom index of the central atom/ion to anchor at the origin $(0,0,0)$ and surround with a spherical solvation shell (default: `0` = cluster center of mass).
+* `--sort=energy|center` — Rank optimized conformers either by UFF energy (`energy`, default) or by ascending offset $d_{	ext{center}} = \|\mathbf{r}_{	ext{anchor}} - \mathbf{r}_{	ext{COM}}\|$ (`center`).
+* `--top-center=<int>` — Retain only the $N$ most symmetrically centered shells around `--center` prior to diversity selection (default: `0` = keep all).
+* `--wall-r=<float>` — Radius $R_{	ext{wall}}$ (in Å) of the smooth quartic confining cavity preventing cluster evaporation during L-BFGS (default: `0.0` = automatic sizing from fragment radii).
+* `--eps=<float>` — Effective dielectric constant $arepsilon$ screening intermolecular Coulomb interactions (default: `2.0`).
+
+### Deduplication, Energy Truncation & Diversity Selection
+* `--dedupl=<mode>` — Duplicate conformer removal algorithm (default: `angle`):
+  * `angle` — Graph-isomorphic Hungarian permutation + Kabsch alignment + heavy-atom RMSD + max atomic displacement ($D_{\max}$) + max torsion deviation ($\Delta\phi_{\max}$).
+  * `rmsd-graph` — Graph-isomorphic Hungarian + Kabsch heavy-atom RMSD only.
+  * `rmsd-hungarian` — Element-wise Hungarian + Kabsch heavy-atom RMSD.
+  * `rmsd-kabsch` — Direct atom-order Kabsch heavy-atom RMSD.
+  * `none` — Disable deduplication.
+* `--rmsd=<float>` — Heavy-atom RMSD threshold in Å for duplicate detection (default: `0.50` in `angle` mode, `0.125` in `rmsd-*` modes).
+* `--maxdist=<float>` — Maximum single-atom displacement threshold $D_{\max}$ in Å in `angle` mode (default: `1.50`).
+* `--angle=<float>` — Maximum torsion-angle deviation threshold in degrees in `angle` mode (default: `30.0`).
+* `--keepenantio=true|false` — Preserve non-superimposable mirror-image enantiomers as distinct conformers (default: `false`).
+* `--top-energy=<int>` — Truncate the deduplicated ensemble to the $N$ lowest-energy unique conformers (default: `0` = keep all). Can be used standalone for energy-ranked output without clustering, or combined with `--max-conf=<K>` as a two-stage energy-then-diversity filter.
+* `--max-conf=<int>` — Select $K$ maximally diverse representatives via parallel Farthest-Point Sampling (MaxMin FPS) in symmetry-invariant heavy-atom RMSD space (default: `0` = output all unique conformers).
 
 ---
 
