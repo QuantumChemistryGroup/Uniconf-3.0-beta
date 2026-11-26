@@ -22,6 +22,8 @@ Standalone, `UFF`-based OpenMP-parallelized conformer, transition-state, and sol
 
 ## 2. Examples (`examples/`)
 
+Timings below are reported for `Intel(R) Core(TM) i5-10600K CPU @ 4.10GHz 16Gb RAM`
+
 ### A. Organic Molecules & Peptides
 * `examples/organic/GFA10.xyz` [Gly-Phe-Ala tripeptide / 39 atoms]
   ```bash
